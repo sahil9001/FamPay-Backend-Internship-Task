@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,21 +39,14 @@ INSTALLED_APPS = [
     'django_cron',
     'search_api',
     'django_crontab',
-    'rest_framework'
+    'rest_framework',
+    'django_filters',
+    'django_celery_beat'
 ]
 
-# Cron classes for specific tasks
-CRON_CLASSES = [
-    "search_api.cronjob.FetchToDatabase",
-]
-
-#Used for printing out cron job errors
-CRONTAB_COMMAND_SUFFIX = '2>&1'
-
-#Cron tab for running the cron job every 1 minute
-CRONJOBS = [
-    ('*/1 * * * *', 'search_api.cronjob.FetchToDatabase', '>> ~/cron_job.log')
-]
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,3 +136,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SEARCH_API_KEYS = [
     'AIzaSyC3ARG5t_Oo8WvwTjbeT5dcRRh4MLsqDkE'
 ]
+CELERY_IMPORTS = ("search_api", )
+
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+
+CELERY_BEAT_SCHEDULE = {
+    "scheduled_task": {
+        "task": "search_api.tasks.taskfetch",
+        "schedule" : 10.0
+    }
+}
