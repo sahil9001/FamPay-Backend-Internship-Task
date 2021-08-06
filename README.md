@@ -68,3 +68,21 @@ We first setup the docker containers and then run the app. After this once the a
 <p align="center">
   <img src="https://github.com/sahil9001/FamPay-Backend-Internship-Task/blob/master/images/Untitled%20Diagram.png" />
 </p>
+
+
+## Adding data to database:
+
+- Celery beat is used to run the tasks in the background. This instance automatically adds the data fetched by the API to the database. For reference, go [here](https://github.com/sahil9001/FamPay-Backend-Internship-Task/blob/master/search_api/tasks.py).
+
+- If the data is already present in the database, it won't be added again, else it will be added.
+
+- Data is continuosly updated every 30 seconds as it fetches it from the API.
+
+
+## API working:
+
+- Used DRF to create the API endpoints and filters to filter out the data according to the timespan and the search query.
+
+- For a GET request to `http://localhost:8000/` endpoint, it returns the latest videos sorted in reverse chronological order of their publishing datetime.
+
+- For a GET request to `http://localhost:8000/search?q={search_query}` endpoint, it returns the stored videos using their title and description.
