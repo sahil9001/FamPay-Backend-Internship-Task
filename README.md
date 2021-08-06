@@ -25,10 +25,11 @@
 # API Endpoints:
 
 - GET / : Fetches the latest videos sorted in reverse chronological order of their publishing datetime.
+![](https://github.com/sahil9001/FamPay-Backend-Internship-Task/blob/master/images/1.png)
 
 - GET /search?q={search_query} : Searches the stored videos using their title and description.
-
-- GET /search?q={search_query}&page={page_number} : Searches the stored videos using their title and description.
+![](https://github.com/sahil9001/FamPay-Backend-Internship-Task/blob/master/images/2.png)
+![](https://github.com/sahil9001/FamPay-Backend-Internship-Task/blob/master/images/3.png)
 
 # TechStack:
 
