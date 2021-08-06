@@ -45,6 +45,13 @@
 
 - Place `.env` file in the root directory of the project.
 
+  - .env file should contain the following variables:
+    - `DEBUG` = True
+    - `SECRET_KEY` = django-insecure-k4xrycd%uo^x)suu-emn+0m=#!=_2f7!$ouj#!jk2t#*97lo=8
+    - `SEARCH_URL` = "https://www.googleapis.com/youtube/v3/search"
+    - `CELERY_BROKER_URL` = 'redis://redis:6379/0'
+    - `YOUTUBE_API_KEY` = <YOUR_YOUTUBE_API_KEY_1>,<YOUR_YOUTUBE_API_KEY_2>
+
 - Install [Docker](https://www.docker.com/get-started) (latest version).
 
 - Run `docker-compose build` to build the docker images.
