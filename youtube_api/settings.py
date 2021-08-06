@@ -134,7 +134,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SEARCH_API_KEYS = [
-    'AIzaSyC3ARG5t_Oo8WvwTjbeT5dcRRh4MLsqDkE'
+    'AIzaSyAGhT2C022yH-6DoxADPKliWgoMTKcJhBU'
 ]
 CELERY_IMPORTS = ("search_api", )
 

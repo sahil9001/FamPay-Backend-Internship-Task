@@ -1,6 +1,7 @@
 version: "3"
 
 services: 
+    
     app:
         build: .
         volumes:
@@ -9,4 +10,36 @@ services:
             - 8000:8000
         image: app:django
         container_name: youtube_api
-        command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py crontab add && python manage.py crontab show && python manage.py runserver 0.0.0.0:8000"
+        command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+
+    rabbit:
+        image: app:django
+        container_name: rabbit
+        hostname: "rabbit"
+        ports:
+            - "5673:5672"
+        restart: on-failure
+        depends_on: 
+            - app
+        command: bash -c "rabbitmq-server"
+    
+    celery-beat:
+        image: app:django
+        container_name: celery-beat
+        command:  bash -c "sleep 2; celery -A youtube_api beat -l info"
+        restart: on-failure
+        depends_on: 
+            - rabbit
+            - app    
+    celery:
+        image: app:django
+        container_name: celery
+        volumes:
+            - .:/django  
+        depends_on: 
+            - rabbit
+            - celery-beat
+        restart: on-failure
+        command: bash -c "sleep 2; celery -A youtube_api worker -l info"
+        
+    

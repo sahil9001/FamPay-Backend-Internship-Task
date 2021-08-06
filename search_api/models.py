@@ -2,7 +2,8 @@ from django.db import models
 
 # Create your models here.
 class Search(models.Model):
-    vid_id = models.CharField(max_length=100, primary_key=True)
+    id = models.AutoField(primary_key=True)
+    vid_id = models.CharField(max_length=1000,null=True)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
     published_at = models.DateTimeField()

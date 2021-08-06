@@ -20,35 +20,40 @@ def taskfetch():
                 'part': 'snippet',
                 'q' : 'cricket',
                 'key': key,
-                'maxResults': 5,
+                'maxResults': 50,
+                'order' : 'date'
             }
             keycheck = True
             r = requests.get(search_url,params=params)
             res = r.json()
         except Exception as e:
-            break
+            print(e)
 
         if keycheck:
             break
 
     if keycheck:
+        print(res)
         for obj in res['items']:
-            vid_id = obj['id']['videoId']
-            title = obj['snippet']['title']
+            vid_id = obj['id'].get('videoId')
+            title = obj['snippet'].get('title')
             description = obj['snippet']['description']
             published_at = obj['snippet']['publishedAt']
             thumbnailsUrls = obj['snippet']['thumbnails']['high']['url']
             channel_id = obj['snippet']['channelId']
             channel_title = obj['snippet']['channelTitle']
-            print(vid_id,title,description,published_at,thumbnailsUrls,channel_id,channel_title)
-            vid_obj, created = Search.objects.get_or_create(
-                vid_id = vid_id,
-                title = title,
-                description = description,
-                published_at = published_at,
-                thumbnailsUrls = thumbnailsUrls,
-                channel_id = channel_id,
-                channel_title = channel_title,
-            )
-            if created == False:
+        #    print(vid_id,title,description,published_at,thumbnailsUrls,channel_id,channel_title)
+            try:
+                vid_obj = Search.objects.get(vid_id=vid_id)
+            except Search.DoesNotExist:    
+                vid_obj = Search.objects.create(
+                    vid_id = vid_id,
+                    title = title,
+                    description = description,
+                    published_at = published_at,
+                    thumbnailsUrls = thumbnailsUrls,
+                    channel_id = channel_id,
+                    channel_title = channel_title,
+                )
                 vid_obj.save()
+                
