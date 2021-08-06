@@ -58,3 +58,6 @@
 We first setup the docker containers and then run the app. After this once the application has pulled the python requirements, the redis server starts along with the python app. Then celery worker is started to run the celery tasks, as to schedule this every 30 seconds a instance of celery-beat is started.
 
 ### Pictorial Representation
+<p align="center">
+  <img src="https://github.com/sahil9001/FamPay-Backend-Internship-Task/blob/master/images/Untitled%20Diagram.png" />
+</p>
